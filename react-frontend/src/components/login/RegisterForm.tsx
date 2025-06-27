@@ -5,6 +5,7 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { FloatLabel } from "primereact/floatlabel";
 import { Toast } from "primereact/toast";
+import { registerUser } from "../../api/auth"; 
 
 import type { RegisterFormProps } from "../../types/Interfaces";
 import { showErrorToast, showSuccessToast } from "../../utils/toastUtils";
@@ -17,24 +18,29 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: RegisterFo
 
   const toast = useRef<Toast>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (!fullName || !email || !password || !confirmPassword) {
-      showErrorToast(toast, "Todos los campos son obligatorios");
-      return;
-    }
+  if (!fullName || !email || !password || !confirmPassword) {
+    showErrorToast(toast, "Todos los campos son obligatorios");
+    return;
+  }
 
-    if (password !== confirmPassword) {
-      showErrorToast(toast, "Las contraseñas no coinciden");
-      return;
-    }
+  if (password !== confirmPassword) {
+    showErrorToast(toast, "Las contraseñas no coinciden");
+    return;
+  }
 
+  try {
+    await registerUser(fullName, email, password);
     showSuccessToast(toast, "Cuenta creada exitosamente");
     onRegister(fullName, email, password);
-        onSwitchToLogin()
-
-  };
+    onSwitchToLogin();
+  } catch (error: any) {
+    const message = error.response?.data?.message || "Error al registrar usuario";
+    showErrorToast(toast, message);
+  }
+};
 
   return (
     <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light">
