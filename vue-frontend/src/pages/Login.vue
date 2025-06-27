@@ -53,7 +53,7 @@ import Card from "primevue/card";
 import { toast } from "vue3-toastify";
 
 interface Props {
-  onLogin: (email: string, password: string) => void;
+  onLogin: (email: string, password: string) => Promise<boolean> | boolean;
   onSwitchToRegister: () => void;
 }
 
@@ -72,22 +72,25 @@ const isEmailValid = (email: string) => {
   return re.test(email);
 };
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   if (!isValid()) {
-
-toast.warn("Usuario y contraseña son requeridos");
+    toast.warn("Usuario y contraseña son requeridos");
     return;
   }
 
   if (!isEmailValid(email.value)) {
-
     toast.warn("El correo electrónico no es válido");
-
     return;
   }
 
-  props.onLogin(email.value, password.value);
-  router.push("/dashboard");
+  try {
+    const loginSuccess = await props.onLogin(email.value, password.value);
+    if (loginSuccess) {
+      router.push("/dashboard");
+    }
+  } catch (error) {
+    toast.error("Error al iniciar sesión");
+  }
 };
 </script>
 
