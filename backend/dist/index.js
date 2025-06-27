@@ -14,18 +14,18 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 // Configuración básica primero
 app.use(express_1.default.json());
-// Configura CORS para todas las rutas EXCEPTO /api-docs
+// CORS para todas las rutas EXCEPTO /api-docs
 app.use((req, res, next) => {
     if (req.path.startsWith('/api-docs')) {
         return next();
     }
     (0, cors_1.default)({
-        origin: 'http://localhost:5173',
+        origin: '*',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true,
     })(req, res, next);
 });
-// Configura Swagger ANTES de las rutas principales
+// Swagger 
 (0, swagger_1.setupSwagger)(app);
 // Rutas de la aplicación
 app.use('/auth', authRoutes_1.default);

@@ -18,7 +18,7 @@ app.use((req, res, next) => {
     return next();
   }
   cors({
-    origin: 'http://localhost:5173',
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })(req, res, next);
