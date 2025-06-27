@@ -6,6 +6,13 @@ import User from '../models/User';
 
 dotenv.config();
 
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     operationId: loginUser
+ *     description: Autentica a un usuario y devuelve un token JWT
+ */
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, password } = req.body;
