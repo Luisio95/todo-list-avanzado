@@ -21,7 +21,7 @@ export default function Dashboard() {
       .catch((err) => console.error("Error al obtener perfil", err));
   }, []);
 
-  if (!profile) return <p>Cargando...</p>;
+  if (!profile) return <p>...</p>;
 
     const handleLogoutConfirm = () => {
     confirmDialog({

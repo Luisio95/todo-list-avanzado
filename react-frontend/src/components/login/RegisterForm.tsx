@@ -14,6 +14,7 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: RegisterFo
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const toast = useRef<Toast>(null);
 
@@ -31,6 +32,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   }
 
   try {
+    setLoading(true);
     await registerUser(fullName, email, password);
     showSuccessToast(toast, "Cuenta creada exitosamente");
     onRegister(fullName, email, password);
@@ -39,6 +41,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     const message = error.response?.data?.message || "Error al registrar usuario";
     showErrorToast(toast, message);
   }
+  setLoading(false);
 };
 
   return (
@@ -111,6 +114,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                 type="submit"
                 className="w-100"
                 raised
+                loading={loading}
               />
               <Button
                 label="Ya tengo cuenta"

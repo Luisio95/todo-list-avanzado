@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
@@ -17,9 +17,9 @@ import { setCredentials } from '../../store/slices/authSlice';
 export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFromProps) {
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
-  const { email, setEmail, password, setPassword, isValid } = useLoginForm(onLogin);
+  const { email, setEmail, password, setPassword, isValid } = useLoginForm();
   const dispatch = useDispatch<AppDispatch>();
-
+  const [loading, setLoading] = useState<boolean>(false);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -29,6 +29,7 @@ export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFromProp
     }
 
     try {
+        setLoading(true);
         const response = await login(email, password);
         dispatch(setCredentials({
           token: response.data.token,
@@ -37,11 +38,13 @@ export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFromProp
         showSuccessToast(toast, "¡Bienvenido!");
         onLogin(email, password);
         setTimeout(() => {
-          navigate("/dashboard");
+        navigate("/dashboard");
+        setLoading(false);
         }, 1000);
       } catch (error: any) {
         const message = error.response?.data?.message || "Error al hacer login";
         showErrorToast(toast, message);
+        setLoading(false);
       }
   };
 
@@ -77,7 +80,7 @@ export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFromProp
               <label htmlFor="password">Contraseña</label>
             </FloatLabel>
 
-            <Button label="Iniciar sesión" icon="pi pi-sign-in" type="submit" className="w-100" raised />
+            <Button label="Iniciar sesión" icon="pi pi-sign-in" type="submit" className="w-100" raised loading={loading}  />
             <Button label="Crear cuenta" link onClick={onSwitchToRegister} className="w-100 p-0" />
           </form>
         </Card>

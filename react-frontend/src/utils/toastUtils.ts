@@ -1,6 +1,6 @@
 // utils/toastUtils.ts
 import { Toast } from "primereact/toast";
-import { RefObject } from "react";
+import { type RefObject } from "react";
 
 type ToastRef = RefObject<Toast | null>;
 

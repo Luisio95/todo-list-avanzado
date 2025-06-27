@@ -8,12 +8,12 @@ export default function AuthPage() {
   const [showRegister, setShowRegister] = useState(false);
   const toast = useRef<Toast>(null);
 
-  const handleLogin = async (email: string, password: string) => {
+  const handleLogin = async (email: string) => {
     // Aquí iría tu llamada al backend /auth/login
     toast.current?.show({ severity: 'info', summary: 'Login', detail: `Email: ${email}` });
   };
 
-  const handleRegister = async (email: string, password: string) => {
+  const handleRegister = async (email: string) => {
     // Aquí iría tu llamada al backend /auth/register
     toast.current?.show({ severity: 'success', summary: 'Registro', detail: `Usuario registrado: ${email}` });
   };

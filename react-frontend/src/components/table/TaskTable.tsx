@@ -6,7 +6,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { FloatLabel } from "primereact/floatlabel";
 import { Dialog } from "primereact/dialog";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { confirmDialog } from "primereact/confirmdialog";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchTasks,
@@ -34,12 +34,12 @@ export default function TaskTable() {
   const { tasks } = useSelector((state: RootState) => state.tasks);
 
   const [filtro, setFiltro] = useState("");
-  const [tareas, setTareas] = useState<TareaUI[]>([]);
   const [mostrarModal, setMostrarModal] = useState(false);
   const [tareaSeleccionada, setTareaSeleccionada] = useState<TareaUI | null>(
     null
   );
   const toast = useRef<Toast>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // Cargar tareas al montar el componente
   useEffect(() => {
@@ -74,7 +74,7 @@ export default function TaskTable() {
             taskData: { completed: !task.completed },
           })
         ).unwrap();
-        showSuccessToast(toast, "Tarea actualizada corrrectamente.")
+        showSuccessToast(toast, "Tarea actualizada corrrectamente.");
       } catch (error) {
         console.error("Error al cambiar estado:", error);
       }
@@ -136,6 +136,7 @@ export default function TaskTable() {
     }
 
     try {
+      setLoading(true);
       if (tareaSeleccionada.id === 0) {
         // Crear nueva tarea
         const taskData = {
@@ -170,6 +171,7 @@ export default function TaskTable() {
       showErrorToast(toast, "Error al guardar la tarea");
     }
     dispatch(fetchTasks());
+    setLoading(false);
   };
 
   // Template para mostrar el estado
@@ -308,6 +310,7 @@ export default function TaskTable() {
               icon="pi pi-check"
               onClick={guardarTarea}
               autoFocus
+              loading={loading}
             />
           </div>
         }
