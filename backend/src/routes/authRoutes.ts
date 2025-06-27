@@ -4,12 +4,6 @@ import { asyncHandler } from '../utils/asyncHandlers';
 import { authMiddleware } from '../middlewares/authMiddlewares';
 
 const router = express.Router();
-/**
- * @swagger
- * tags:
- *   name: Auth
- *   description: Autenticación de usuarios
- */
 
 /**
  * @swagger

@@ -18,6 +18,13 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const User_1 = __importDefault(require("../models/User"));
 dotenv_1.default.config();
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     operationId: loginUser
+ *     description: Autentica a un usuario y devuelve un token JWT
+ */
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { username, password } = req.body;
