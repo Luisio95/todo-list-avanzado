@@ -1,39 +1,44 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { FloatLabel } from "primereact/floatlabel";
-import { Message } from "primereact/message";
+import { Toast } from "primereact/toast";
 
-interface Props {
-  onRegister: (
-    username: string,
-    email: string,
-    password: string
-  ) => void;
-  onSwitchToLogin: () => void;
-}
+import type { RegisterFormProps } from "../../types/Interfaces";
+import { showErrorToast, showSuccessToast } from "../../utils/toastUtils";
 
-export default function RegisterForm({ onRegister, onSwitchToLogin }: Props) {
+export default function RegisterForm({ onRegister, onSwitchToLogin }: RegisterFormProps) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+
+  const toast = useRef<Toast>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Las contraseñas no coinciden");
+
+    if (!fullName || !email || !password || !confirmPassword) {
+      showErrorToast(toast, "Todos los campos son obligatorios");
       return;
     }
-    setError("");
+
+    if (password !== confirmPassword) {
+      showErrorToast(toast, "Las contraseñas no coinciden");
+      return;
+    }
+
+    showSuccessToast(toast, "Cuenta creada exitosamente");
     onRegister(fullName, email, password);
+        onSwitchToLogin()
+
   };
 
   return (
     <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light">
+      <Toast ref={toast} />
       <Card style={{ maxWidth: "600px", width: "100%" }}>
         <div className="text-center mb-4">
           <img src="/logosvg.svg" alt="Logo" className="w-50" />
@@ -43,7 +48,7 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: Props) {
         <form onSubmit={handleSubmit} className="container">
           <div className="row g-3">
             <div className="col-md-6">
-              <FloatLabel>
+              <FloatLabel className="mt-3">
                 <InputText
                   id="fullName"
                   value={fullName}
@@ -55,7 +60,7 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: Props) {
             </div>
 
             <div className="col-md-6">
-              <FloatLabel>
+              <FloatLabel className="mt-3">
                 <InputText
                   id="email"
                   value={email}
@@ -67,7 +72,7 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: Props) {
             </div>
 
             <div className="col-md-6">
-              <FloatLabel>
+              <FloatLabel className="mt-3">
                 <Password
                   id="password"
                   toggleMask
@@ -81,7 +86,7 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: Props) {
             </div>
 
             <div className="col-md-6">
-              <FloatLabel>
+              <FloatLabel className="mt-3">
                 <Password
                   id="confirmPassword"
                   toggleMask
@@ -93,12 +98,6 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: Props) {
                 <label htmlFor="confirmPassword">Confirmar contraseña</label>
               </FloatLabel>
             </div>
-
-            {error && (
-              <div className="col-12">
-                <Message severity="error" text={error} />
-              </div>
-            )}
 
             <div className="col-12 d-grid gap-2 mt-3">
               <Button

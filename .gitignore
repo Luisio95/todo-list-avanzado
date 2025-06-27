@@ -1,2 +1,7 @@
 node_modules/
 .env
+
+# Ignorar node_modules en todos los proyectos
+react-fontend/node_modules/
+vue-frontend/node_modules/
+

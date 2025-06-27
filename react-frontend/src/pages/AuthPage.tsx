@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import LoginForm from '../components/auth/LoginForm';
-import RegisterForm from '../components/auth/RegisterForm';
+import LoginForm from '../components/login/LoginForm';
+import RegisterForm from '../components/login/RegisterForm';
 import { Toast } from 'primereact/toast';
 import { useRef } from 'react';
 

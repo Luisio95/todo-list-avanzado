@@ -8,6 +8,7 @@ import { FloatLabel } from "primereact/floatlabel";
 import { Dialog } from "primereact/dialog";
 import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 interface Tarea {
   id: number;
@@ -75,11 +76,21 @@ export default function TaskTable() {
   };
 
   // Eliminar tarea con confirmación
-  const eliminarTarea = (id: number) => {
-    if (window.confirm("¿Eliminar esta tarea?")) {
+const eliminarTarea = (id: number) => {
+  const tarea = tareas.find((t) => t.id === id);
+  confirmDialog({
+    message: `¿Estás seguro de eliminar la tarea "${tarea?.titulo}"?`,
+    header: "Confirmar eliminación",
+    icon: "pi pi-exclamation-triangle",
+    acceptLabel: "Sí",
+    rejectLabel: "No",
+    acceptClassName: "p-button-primary",
+    accept: () => {
       setTareas((prev) => prev.filter((t) => t.id !== id));
-    }
-  };
+    },
+  });
+};
+
 
   // Abrir modal para nueva tarea
   const nuevaTarea = () => {
@@ -125,56 +136,64 @@ export default function TaskTable() {
     />
   );
 
-const accionesTemplate = (rowData: Tarea) => (
-  <div className="d-flex gap-2 justify-content-center">
-    <Button
+  const accionesTemplate = (rowData: Tarea) => (
+    <div className="d-flex gap-2 justify-content-center">
+      <Button
         raised
-      icon={rowData.estado === "completada" ? "pi pi-undo" : "pi pi-check"}
-      className={`p-button-rounded ${
-        rowData.estado === "completada"
-          ? "p-button-warning"
-          : "p-button-success"
-      }`}
-      onClick={() => toggleEstado(rowData.id)}
-      tooltip={
-        rowData.estado === "completada"
-          ? "Marcar como pendiente"
-          : "Marcar como completada"
-      }
-      tooltipOptions={{ position: "top" }}
-      size="small"
-    />
-    <Button
-    raised
-      icon="pi pi-pencil"
-      className="p-button-rounded p-button-info"
-      onClick={() => editarTarea(rowData)}
-      tooltip="Editar tarea"
-      tooltipOptions={{ position: "top" }}
-      size="small"
-    />
-    <Button
-    raised
-      icon="pi pi-trash"
-      className="p-button-rounded p-button-danger"
-      onClick={() => eliminarTarea(rowData.id)}
-      tooltip="Eliminar tarea"
-      tooltipOptions={{ position: "top" }}
-      size="small"
-    />
-  </div>
-);
+        icon={rowData.estado === "completada" ? "pi pi-undo" : "pi pi-check"}
+        className={`p-button-rounded ${
+          rowData.estado === "completada" ? "p-button" : "p-button"
+        }`}
+        onClick={() => toggleEstado(rowData.id)}
+        tooltip={
+          rowData.estado === "completada"
+            ? "Marcar como pendiente"
+            : "Marcar como completada"
+        }
+        tooltipOptions={{ position: "top" }}
+        size="small"
+      />
+      <Button
+        raised
+        icon="pi pi-pencil"
+        className="p-button-rounded"
+        onClick={() => editarTarea(rowData)}
+        tooltip="Editar tarea"
+        tooltipOptions={{ position: "top" }}
+        size="small"
+      />
+      <Button
+        raised
+        icon="pi pi-trash"
+        className="p-button-rounded"
+        onClick={() => eliminarTarea(rowData.id)}
+        tooltip="Eliminar tarea"
+        tooltipOptions={{ position: "top" }}
+        size="small"
+      />
+    </div>
+  );
 
+  const header = (
+    <div className="d-flex d-flex-wrap align-items-center justify-content-between gap-2">
+      <span className="text-xl text-900 font-bold">
+        <i className="pi pi-table mx-2"></i> Listado de tareas
+      </span>
+    </div>
+  );
+
+  const footer = `En total hay ${tareas ? tareas.length : 0} tareas`;
 
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1 className="mb-0">Listado de tareas</h1>
+        <h1 className="mb-0"></h1>
         <Button
           label="Crear nueva tarea"
           icon="pi pi-plus"
           className="p-button-primary"
           onClick={nuevaTarea}
+          raised
         />
       </div>
       <div className="mb-3 flex justify-content-between align-items-center">
@@ -194,10 +213,15 @@ const accionesTemplate = (rowData: Tarea) => (
         paginator
         rows={5}
         rowsPerPageOptions={[5, 10, 15, 20]}
-        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} tareas"
         totalRecords={tareasFiltradas.length}
         responsiveLayout="scroll"
+        header={header}
+        footer={footer}
+        stripedRows
+        showGridlines
+        emptyMessage="No hay tareas."
       >
         <Column field="titulo" header="Título" sortable />
         <Column field="descripcion" header="Descripción" />
@@ -310,6 +334,7 @@ const accionesTemplate = (rowData: Tarea) => (
           </FloatLabel>
         </div>
       </Dialog>
+      <ConfirmDialog />
     </div>
   );
 }
