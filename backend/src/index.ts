@@ -12,7 +12,7 @@ const app = express();
 // Configuración básica primero
 app.use(express.json());
 
-// Configura CORS para todas las rutas EXCEPTO /api-docs
+// CORS para todas las rutas EXCEPTO /api-docs
 app.use((req, res, next) => {
   if (req.path.startsWith('/api-docs')) {
     return next();
@@ -24,7 +24,7 @@ app.use((req, res, next) => {
   })(req, res, next);
 });
 
-// Configura Swagger ANTES de las rutas principales
+// Swagger 
 setupSwagger(app);
 
 // Rutas de la aplicación
