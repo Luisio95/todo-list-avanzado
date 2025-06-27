@@ -6,22 +6,21 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { FloatLabel } from "primereact/floatlabel";
 import { useNavigate } from "react-router-dom";
-
 import { useLoginForm } from "./useLoginForm";
-import { isEmailValid } from "./Validators";
-import { showErrorToast } from "../../utils/toastUtils";
+import { showErrorToast, showSuccessToast } from "../../utils/toastUtils";
+import { login } from "../../api/auth"; 
+import type { LoginFromProps } from "../../types/Interfaces";
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../store';
+import { setCredentials } from '../../store/slices/authSlice';
 
-interface Props {
-  onLogin: (email: string, password: string) => void;
-  onSwitchToRegister: () => void;
-}
-
-export default function LoginForm({ onLogin, onSwitchToRegister }: Props) {
+export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFromProps) {
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
   const { email, setEmail, password, setPassword, isValid } = useLoginForm(onLogin);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!isValid()) {
@@ -29,13 +28,21 @@ export default function LoginForm({ onLogin, onSwitchToRegister }: Props) {
       return;
     }
 
-    if (!isEmailValid(email)) {
-      showErrorToast(toast, "El correo electrónico no es válido");
-      return;
-    }
-
-    onLogin(email, password);
-    navigate("/dashboard");
+    try {
+        const response = await login(email, password);
+        dispatch(setCredentials({
+          token: response.data.token,
+          email: email
+        }));
+        showSuccessToast(toast, "¡Bienvenido!");
+        onLogin(email, password);
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 1000);
+      } catch (error: any) {
+        const message = error.response?.data?.message || "Error al hacer login";
+        showErrorToast(toast, message);
+      }
   };
 
   return (
@@ -56,7 +63,7 @@ export default function LoginForm({ onLogin, onSwitchToRegister }: Props) {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-100"
               />
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">Usuario</label>
             </FloatLabel>
 
             <FloatLabel className="mt-3">

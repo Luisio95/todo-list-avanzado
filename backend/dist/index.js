@@ -13,13 +13,13 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: 'http://localhost:3001',
+    origin: 'http://localhost:5173', // el frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
+    credentials: true, // si usas sesiones o cookies
 }));
 app.use('/auth', authRoutes_1.default);
 app.use('/api', taskRoutes_1.default);
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 database_1.default.sync({ force: false }).then(() => {
     console.log('Conectado a la base de datos');
     app.listen(PORT, () => {

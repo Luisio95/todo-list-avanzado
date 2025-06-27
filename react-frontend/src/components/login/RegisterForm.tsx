@@ -6,7 +6,6 @@ import { Card } from "primereact/card";
 import { FloatLabel } from "primereact/floatlabel";
 import { Toast } from "primereact/toast";
 import { registerUser } from "../../api/auth"; 
-
 import type { RegisterFormProps } from "../../types/Interfaces";
 import { showErrorToast, showSuccessToast } from "../../utils/toastUtils";
 
@@ -61,7 +60,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                   onChange={(e) => setFullName(e.target.value)}
                   className="w-100"
                 />
-                <label htmlFor="fullName">Nombre completo</label>
+                <label htmlFor="fullName">Nombre de usuario</label>
               </FloatLabel>
             </div>
 
