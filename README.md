@@ -39,18 +39,96 @@ Backend (Node.js)
 Base de Datos
   MySQL como sistema de base de datos relacional
 
-🚀 Instalación y Configuración
+⚙️ Instalación y Configuración
 
 Requisitos Previos
   Node.js (v16+)
   MySQL (v8+)
-  npm o yarn
+  npm o Yarn
+  (Opcional) XAMPP para instalar MySQL fácilmente
 
-Pasos para Configuración
-1- Clonar el repositorio
+1️⃣ Clonar el Repositorio
+  bash
+  Copiar
+  Editar
+  git clone [URL_DEL_REPOSITORIO]
+  cd todo-list-avanzada
 
-git clone [URL_DEL_REPOSITORIO]
-cd todo-list-avanzada
+2️⃣ Configurar la Base de Datos
+Si no cuentas con MySQL instalado, puedes descargar e instalar XAMPP y activar el módulo MySQL y APACHE.
 
-2.- 
+Luego, crea una base de datos con el siguiente nombre:
+
+  sql
+  Copiar
+  Editar
+  CREATE DATABASE BD_todoList;
+
+3️⃣ Configurar Variables de Entorno
+Cada proyecto (backend y frontend) contiene un archivo .env.example en su raíz con los ejemplos de configuración necesarios.
+
+Copia y renombra este archivo como .env, y modifica los valores según tu entorno:
+
+  bash
+  Copiar
+  Editar
+  cp ./backend/.env.example ./backend/.env
+  cp ./react-frontend/.env.example ./react-frontend/.env
+
+🔐 Para generar el secreto del JWT puedes usar el siguiente comando en terminal:
+
+  bash
+  Copiar
+  Editar
+  node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+
+4️⃣ Iniciar el Backend
+Ubícate en la carpeta del backend y compila el proyecto:
+
+  bash
+  Copiar
+  Editar
+  cd ./backend
+  npm install
+  npx tsc
+  node ./dist/index.js
+
+✅ El servidor debería iniciar en el puerto 3001. Verás algo como:
+
+  bash
+  Copiar
+  Editar
+  Servidor corriendo en el puerto 3001
+  Swagger UI disponible en http://localhost:3001/api-docs
+
+5️⃣ Iniciar el Frontend (React)
+Ahora ejecuta la versión React del frontend:
+
+  bash
+  Copiar
+  Editar
+  cd ../react-frontend
+  npm install
+  npm run dev
+  El frontend debería estar corriendo en http://localhost:5173.
+
+🎯 La versión Vue se encuentra en la carpeta vue-frontend (instalación similar).
+
+📸 Imágenes y Video Demo
+A continuación se muestra una captura de la documentación interactiva generada con Swagger para la API:
+
+
+También puedes ver la aplicación en funcionamiento en el siguiente video:
+
+🎥 Ver Video de la App en Acción <!-- Reemplaza este enlace -->
+
+📐 Decisiones de Arquitectura
+  Separación de responsabilidades: Frontend y backend en carpetas independientes.
+  Tipado fuerte con TypeScript tanto en backend como frontend para mayor robustez.
+  Autenticación segura con JWT y Bcrypt.
+  Redux Toolkit y Pinia para un manejo global de estado escalable y fácil de mantener.
+  Swagger para documentar y probar endpoints rápidamente.
+  PrimeReact y Bootstrap para una UI limpia y moderna, con componentes reutilizables.
+
+
 
