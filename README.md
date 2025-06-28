@@ -69,49 +69,37 @@ Cada proyecto (backend y frontend) contiene un archivo .env.example en su raíz 
 
 Copia y renombra este archivo como .env, y modifica los valores según tu entorno:
 
-  ```bash
-  Copiar
-  Editar
-  cp ./backend/.env.example ./backend/.env
-  cp ./react-frontend/.env.example ./react-frontend/.env
-```
 🔐 Para generar el secreto del JWT puedes usar el siguiente comando en terminal:
 
-  bash
-  Copiar
-  Editar
+  ```bash
   node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
-
+```
 4️⃣ Iniciar el Backend
 Ubícate en la carpeta del backend y compila el proyecto:
 
-  bash
-  Copiar
-  Editar
+  ```bash
   cd ./backend
   npm install
   npx tsc
   node ./dist/index.js
-
+```
 ✅ El servidor debería iniciar en el puerto 3001. Verás algo como:
 
-  bash
-  Copiar
-  Editar
+  ```bash
   Servidor corriendo en el puerto 3001
   Swagger UI disponible en http://localhost:3001/api-docs
+```
 
 5️⃣ Iniciar el Frontend (React)
 Ahora ejecuta la versión React del frontend:
 
-  bash
-  Copiar
-  Editar
+ ``` bash
   cd ../react-frontend
   npm install
   npm run dev
+```
   El frontend debería estar corriendo en http://localhost:5173.
-
+  
 🎯 La versión Vue se encuentra en la carpeta vue-frontend (instalación similar).
 
 📸 Imágenes y Video Demo
