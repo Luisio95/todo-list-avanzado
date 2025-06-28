@@ -1,0 +1,20 @@
+FROM node:16-alpine
+
+# Usamos el nombre de tu carpeta real
+WORKDIR /react-frontend
+
+# Copiar solo lo necesario para instalar dependencias primero
+COPY package*.json .
+COPY vite.config.ts .
+
+# Instalación de dependencias
+RUN npm install
+
+# Copiar el resto de los archivos
+COPY . .
+
+# Puerto de Vite
+EXPOSE 5173
+
+# Comando para desarrollo
+CMD ["npm", "run", "dev"]

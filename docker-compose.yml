@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports: ["3001:3001"]
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=secret
+      - DB_NAME=todolist
+    depends_on:
+      - db
+
+  react:
+    build:
+      context: ./react-frontend
+      dockerfile: Dockerfile.dev
+    ports: ["5173:5173"]
+    volumes:
+      - ./react-frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  vue:
+    build:
+      context: ./vue-frontend
+      dockerfile: Dockerfile.dev
+    ports: ["5174:5174"]
+    volumes:
+      - ./vue-frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  db:
+    image: mysql:8.0
+    ports: ["3306:3306"]
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todolist
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:

@@ -109,6 +109,32 @@ También puedes ver la aplicación en funcionamiento en el siguiente video:
 
 ![Demo en funcionamiento](https://github.com/Luisio95/todo-list-avanzado/blob/main/react-frontend/src/video.gif)
 
+
+🚀 Uso con Docker
+
+1.- Construir y levantar contenedores:
+
+ ``` bash
+  docker-compose up -d --build
+```
+2.- Ejecutar migraciones:
+
+ ``` bash
+  docker-compose exec backend npx sequelize-cli db:migrate
+```
+3.- 
+Acceder a los servicios:
+
+  API: http://localhost:3001
+  React: http://localhost:5173
+  Vue: http://localhost:5174
+  MySQL: puerto 3306
+
+  4.- Detener servicios:
+ ``` bash
+docker-compose down
+```
+
 📐 Decisiones de Arquitectura
 
   Separación de responsabilidades: Frontend y backend en carpetas independientes.

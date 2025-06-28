@@ -1,0 +1,22 @@
+FROM node:16-alpine
+
+WORKDIR /app
+
+# 1. Copiar archivos de dependencias
+COPY package*.json ./
+COPY tsconfig.json ./
+
+# 2. Instalar dependencias
+RUN npm install
+
+# 3. Copiar todo el código fuente
+COPY . .
+
+# 4. Compilar TypeScript
+RUN npx tsc
+
+# 5. Exponer puerto
+EXPOSE 3001
+
+# 6. Comando de inicio (usa la versión compilada)
+CMD ["node", "./dist/index.js"]
