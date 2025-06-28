@@ -108,7 +108,7 @@ A continuación se muestra una captura de la documentación interactiva generada
 
 También puedes ver la aplicación en funcionamiento en el siguiente video:
 
-🎥 Ver Video de la App en Acción <!-- Reemplaza este enlace -->
+[Descargar video demo](https://github.com/Luisio95/todo-list-avanzado/blob/main/react-frontend/src/video.mp4)
 
 📐 Decisiones de Arquitectura
   Separación de responsabilidades: Frontend y backend en carpetas independientes.
