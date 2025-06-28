@@ -88,7 +88,7 @@ Ubícate en la carpeta del backend y compila el proyecto:
   Servidor corriendo en el puerto 3001
   Swagger UI disponible en http://localhost:3001/api-docs
 
-  ![Swagger UI](./assets/swagger.png)
+  ![Swagger UI](./react-frontend/assets/swagger.png)
 
 5️⃣ Iniciar el Frontend (React)
 Ahora ejecuta la versión React del frontend:
