@@ -69,12 +69,12 @@ Cada proyecto (backend y frontend) contiene un archivo .env.example en su raíz 
 
 Copia y renombra este archivo como .env, y modifica los valores según tu entorno:
 
-  bash
+  ```bash
   Copiar
   Editar
   cp ./backend/.env.example ./backend/.env
   cp ./react-frontend/.env.example ./react-frontend/.env
-
+```
 🔐 Para generar el secreto del JWT puedes usar el siguiente comando en terminal:
 
   bash
