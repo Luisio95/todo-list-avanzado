@@ -21,6 +21,7 @@ Versión Vue (enlace pendiente)
 
 Frontend (React)
   React con TypeScript
+  Vite como bundler y entorno de desarrollo
   Redux Toolkit para gestión de estado
   React Router para navegación
   PrimeReact para componentes UI
@@ -60,8 +61,6 @@ Si no cuentas con MySQL instalado, puedes descargar e instalar XAMPP y activar e
 Luego, crea una base de datos con el siguiente nombre:
 
   sql
-  Copiar
-  Editar
   CREATE DATABASE BD_todoList;
 
 3️⃣ Configurar Variables de Entorno
@@ -111,6 +110,7 @@ También puedes ver la aplicación en funcionamiento en el siguiente video:
 ![Demo en funcionamiento](https://github.com/Luisio95/todo-list-avanzado/blob/main/react-frontend/src/video.gif)
 
 📐 Decisiones de Arquitectura
+
   Separación de responsabilidades: Frontend y backend en carpetas independientes.
   Tipado fuerte con TypeScript tanto en backend como frontend para mayor robustez.
   Autenticación segura con JWT y Bcrypt.
