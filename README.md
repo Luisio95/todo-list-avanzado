@@ -85,10 +85,10 @@ Ubícate en la carpeta del backend y compila el proyecto:
 ```
 ✅ El servidor debería iniciar en el puerto 3001. Verás algo como:
 
-  ```bash
   Servidor corriendo en el puerto 3001
   Swagger UI disponible en http://localhost:3001/api-docs
-```
+
+  ![Swagger UI](./public/swagger.png)
 
 5️⃣ Iniciar el Frontend (React)
 Ahora ejecuta la versión React del frontend:
@@ -99,7 +99,7 @@ Ahora ejecuta la versión React del frontend:
   npm run dev
 ```
   El frontend debería estar corriendo en http://localhost:5173.
-  
+
 🎯 La versión Vue se encuentra en la carpeta vue-frontend (instalación similar).
 
 📸 Imágenes y Video Demo
