@@ -14,7 +14,7 @@
         <template #content>
           <form @submit.prevent="handleSubmit" class="d-flex flex-column gap-3">
             <div class="d-flex-column gap-2">
-              <label for="username">Email</label>
+              <label for="username">Usuario</label>
               <InputText id="username" v-model="email" class="w-100" />
             </div>
 
@@ -51,6 +51,7 @@ import Password from "primevue/password";
 import Button from "primevue/button";
 import Card from "primevue/card";
 import { toast } from "vue3-toastify";
+import { login } from "../composables/request";
 
 interface Props {
   onLogin: (email: string, password: string) => Promise<boolean> | boolean;
@@ -62,6 +63,10 @@ const router = useRouter();
 
 const email = ref("");
 const password = ref("");
+
+const onSwitchToRegister = () => {
+  router.push("/register");
+};
 
 const isValid = () => {
   return email.value.trim() !== "" && password.value.trim() !== "";
@@ -78,15 +83,15 @@ const handleSubmit = async () => {
     return;
   }
 
-  if (!isEmailValid(email.value)) {
-    toast.warn("El correo electrónico no es válido");
-    return;
-  }
-
   try {
-    const loginSuccess = await props.onLogin(email.value, password.value);
-    if (loginSuccess) {
+    const response = await login(email.value, password.value);
+    console.log(response)
+    if (response.token) {
+      localStorage.setItem("token", response.token);
+      toast.success("Inicio de sesión exitoso");
       router.push("/dashboard");
+    }else {
+      toast.error("Credenciales incorrectas");
     }
   } catch (error) {
     toast.error("Error al iniciar sesión");

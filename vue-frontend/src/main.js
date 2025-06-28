@@ -1,5 +1,6 @@
 
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
@@ -17,6 +18,25 @@ import "primeicons/primeicons.css";
 //Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+
+// Axios
+import axios from "axios";
+import VueAxios from 'vue-axios'
+
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+axios.interceptors.request.use(
+  (config) => {
+    if (localStorage.getItem("token")) {
+      const data = localStorage.getItem("token");
+      config.headers["Authorization"] = "Bearer " + data;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 
 const app = createApp(App)
 
@@ -70,11 +90,12 @@ app.use(PrimeVue, {
     }
   });
 app.use(Vue3Toasity, {
-    autoClose: 3000,
+    autoClose: 5000,
     position: "top-right",
     theme: "colored",
     transition: "bounce",
     // multiple: false,
   });
-
+app.use(VueAxios, axios)
+app.use(createPinia())
 app.mount('#app')
