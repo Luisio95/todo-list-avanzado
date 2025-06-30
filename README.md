@@ -11,7 +11,7 @@
 
 **Aplicación TODO List profesional con doble implementación frontend**
 
-[🚀 Demo React](#) • [🚀 Demo Vue](#) • [📖 Documentación API](#) • [🐛 Reportar Bug](#)
+[🚀 Demo React](https://react-todolist-brown-five.vercel.app/) • [🚀 Demo Vue](#) • [📖 Documentación API](https://back-todolist-production-79a7.up.railway.app/api-docs) • [🐛 Reportar Bug](#)
 
 </div>
 
@@ -303,9 +303,11 @@ DB_PASSWORD=tu contraseña de mysql por defecto es vacio
 DB_NAME=BD_todoList
 JWT_SECRET=tuJWT secreto
 PORT=3001  # o el puerto que prefieras```
+```
 
 **Generar secreto JWT:**
   Desde tu cmd ejecuta el siguiente comando y copia / pega el token en la variable JWT_SECRET
+
 ```bash
 node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 ```
