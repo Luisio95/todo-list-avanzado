@@ -11,7 +11,12 @@
 
 **Aplicación TODO List profesional con doble implementación frontend**
 
-[🚀 Demo React](https://react-todolist-brown-five.vercel.app/) • [🚀 Demo Vue](#) • [📖 Documentación API](https://back-todolist-production-79a7.up.railway.app/api-docs) • [🐛 Reportar Bug](#)
+<di align="center">
+## 🌐 Despliegues <br>
+  
+• [🚀 Demo React] (https://react-todolist-brown-five.vercel.app/) <br> • [📖 Documentación API] (https://back-todolist-production-79a7.up.railway.app/api-docs) <br> • [🐛 Reportar Bug](#)
+</div>
+
 
 </div>
 
