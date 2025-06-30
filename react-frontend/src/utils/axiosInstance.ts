@@ -7,6 +7,7 @@ const api = axios.create({
   },
 });
 
+console.log(import.meta.env.VITE_API_BASE_URL)
 // Lista de endpoints que no requieren autenticación
 const publicEndpoints = [
   '/auth/login',
